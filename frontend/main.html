@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .input-container {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="text"] {
+        width: 200px;
+      }
+      button {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="input-container">
+      <label for="name">Name:</label>
+      <input type="text" id="name" />
+    </div>
+    <div class="input-container">
+      <label for="height">height :</label>
+      <input type="text" id="height" />
+    </div>
+    <div class="input-container">
+      <label for="weight">weight :</label>
+      <input type="text" id="weight" />
+    </div>
+    <div class="input-container">
+      <label for="problem">problem</label>
+      <input type="text" id="problem" />
+    </div>
+
+    <button onclick="startListening()">Start</button>
+
+    <script>
+      const fields = [
+        "name",
+        "height",
+        "weight",
+        "problem",
+      ];
+      let currentFieldIndex = 0;
+      let recognition = null;
+
+      function startListening() {
+        const fieldId = fields[currentFieldIndex];
+        const labelElement = document.querySelector(
+          `label[for="${fieldId}"]`
+        );
+        const inputElement =
+          document.getElementById(fieldId);
+
+        if (recognition) {
+          recognition.stop();
+        }
+
+        recognition = new (window.SpeechRecognition ||
+          window.webkitSpeechRecognition)();
+        recognition.lang = "en-US";
+
+        recognition.onstart = function () {
+          labelElement.textContent = `Listening for ${labelElement.textContent}...`;
+        };
+
+        recognition.onresult = function (event) {
+          const transcript = event.results[0][0].transcript;
+          inputElement.value = transcript;
+        };
+
+        recognition.onend = function () {
+          labelElement.textContent = `Spoken ${labelElement.textContent}`;
+          currentFieldIndex++;
+
+          if (currentFieldIndex < fields.length) {
+            startListening();
+          }
+        };
+
+        recognition.start();
+      }
+    </script>
+  </body>
+</html>

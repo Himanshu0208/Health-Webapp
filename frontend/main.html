@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      .input-container {
-        margin-bottom: 20px;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-      input[type="text"] {
-        width: 200px;
-      }
-      button {
-        margin-top: 10px;
-      }
-    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Health Webapp</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div class="input-container">
@@ -36,53 +31,5 @@
     </div>
 
     <button onclick="startListening()">Start</button>
-
-    <script>
-      const fields = [
-        "name",
-        "height",
-        "weight",
-        "problem",
-      ];
-      let currentFieldIndex = 0;
-      let recognition = null;
-
-      function startListening() {
-        const fieldId = fields[currentFieldIndex];
-        const labelElement = document.querySelector(
-          `label[for="${fieldId}"]`
-        );
-        const inputElement =
-          document.getElementById(fieldId);
-
-        if (recognition) {
-          recognition.stop();
-        }
-
-        recognition = new (window.SpeechRecognition ||
-          window.webkitSpeechRecognition)();
-        recognition.lang = "en-US";
-
-        recognition.onstart = function () {
-          labelElement.textContent = `Listening for ${labelElement.textContent}...`;
-        };
-
-        recognition.onresult = function (event) {
-          const transcript = event.results[0][0].transcript;
-          inputElement.value = transcript;
-        };
-
-        recognition.onend = function () {
-          labelElement.textContent = `Spoken ${labelElement.textContent}`;
-          currentFieldIndex++;
-
-          if (currentFieldIndex < fields.length) {
-            startListening();
-          }
-        };
-
-        recognition.start();
-      }
-    </script>
   </body>
 </html>

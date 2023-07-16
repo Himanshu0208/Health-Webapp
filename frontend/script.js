@@ -50,3 +50,11 @@ function startListening() {
 if (currentFieldIndex == 0) {
   speakText("welcome to health webapp");
 }
+
+function startTalking() {
+  var mouth = document.querySelector(".mouth");
+  mouth.classList.add("talking");
+  setTimeout(function () {
+    mouth.classList.remove("talking");
+  }, 2000);
+}

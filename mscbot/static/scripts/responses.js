@@ -34,7 +34,7 @@ function getBotResponse(input) {
     } else {
       return `your bmi is ${bmi.toFixed(
         2
-      )}_Sorry i do not have any record found for ${input} ${"\u{1F622}"}`;
+      )}_Sorry i do not have any record found ${input} ${"\u{1F622}"}`;
     }
   }
 }

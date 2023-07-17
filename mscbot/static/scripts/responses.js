@@ -20,9 +20,21 @@ function getBotResponse(input) {
     weight = parseFloat(input);
     return "Do you have any problem ?";
   } else if (count == 4) {
-    problem = input;
+    problem = input.toLowerCase().replace(/\s/g, "");
     var bmi = weight / (height * height);
+    if (problem == "no") {
+      return `your bmi is ${bmi.toFixed(2)}`;
+    } else if (problem in data) {
+      var arr = data[problem];
+      var index = Math.floor(Math.random() * arr.length);
 
-    return `your bmi is ${bmi.toFixed(2)}`;
+      return `your bmi is ${bmi.toFixed(2)}_for ${input}_${
+        arr[index]
+      }`;
+    } else {
+      return `your bmi is ${bmi.toFixed(
+        2
+      )}_Sorry i do not have any record found for ${input} ${"\u{1F622}"}`;
+    }
   }
 }

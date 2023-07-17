@@ -39,15 +39,20 @@ firstBotMessage();
 // Retrieves the response
 function getHardResponse(userText) {
   let botResponse = getBotResponse(userText);
-  let botHtml =
-    '<p class="botText"><span>' +
-    botResponse +
-    "</span></p>";
-  $("#chatbox").append(botHtml);
+  const delimiter = "_";
+  const parts = botResponse.split(delimiter);
 
-  document
-    .getElementById("chat-bar-bottom")
-    .scrollIntoView(true);
+  for (let i = 0; i < parts.length; i++) {
+    let botHtml =
+      '<p class="botText"><span>' +
+      parts[i] +
+      "</span></p>";
+    $("#chatbox").append(botHtml);
+
+    document
+      .getElementById("chat-bar-bottom")
+      .scrollIntoView(true);
+  }
 }
 
 //Gets the text text from the input box and processes it
